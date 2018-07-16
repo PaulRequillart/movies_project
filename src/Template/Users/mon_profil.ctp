@@ -17,9 +17,9 @@
 </div>
 
 <div class="container no-border center">
-    <div class="title">
-        <a onclick="editEmail()">Changer l'adresse email</a>
-        <a onclick="editPassword()">Changer votre mot de passe</a>       
+    <div class="">
+        <a class='btn btn-info' onclick="editEmail()">Changer l'adresse email</a>
+        <a class='btn btn-info' onclick="editPassword()">Changer votre mot de passe</a>       
 
         <script>
             function editEmail() {

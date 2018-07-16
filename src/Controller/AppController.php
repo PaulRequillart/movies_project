@@ -72,6 +72,12 @@ class AppController extends Controller
             $this->set('loggedIn', false);
         }
 
-        $this->set('role', $this->request->session()->read('Auth.User.role'));
+        $role = $this->request->session()->read('Auth.User.role');
+        if($role = 'admin'){
+            $this->set('admin', true);
+        }else{
+            $this->set('admin', false);
+        }
+
     }
 }

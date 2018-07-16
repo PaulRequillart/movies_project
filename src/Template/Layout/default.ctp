@@ -65,21 +65,14 @@ $cakeDescription = 'Movies Project';
 
             <?php
                 if($loggedIn){
-                    if($role == 'admin'){
+                    if($admin){
+                        //menu admin
+                    } elseif(!$admin){ 
+                        //menu user
+                    }    
             ?>
-                        <li class="nav-item"> <?= $this->Html->link('users','#' /* ['controller' => 'Users', 'action'=>'index'], ["class"=>"nav-link"] */) ?></li>
-                        <li class="nav-item"> <?= $this->Html->link('Movies','#' /* ['controller'=>'Modules', 'action'=>'index'], ["class"=>"nav-link"]*/) ?> </li>
-
-             <!-- FIN MENU ADMIN -->    
-
-            <!-- MENU USERS -->
-
-                    <?php }else if($role == 'user'){ ?>
-                        <?php } ?>
             </ul>
-        
-            <!-- FIN MENU USERS -->
-    
+
             <ul class="navbar-nav ml-auto">        
                 <li class="nav-item dropdown">
                 <?= $this->Html->link($this->Html->image('user-logo.png', array('width' => '30', 'height' => '30')). ' ' .ucfirst($this->request->session()->read('Auth.User.username').'  '), '#', array('class'=>'nav-link dropdown-toggle', 'data-toggle'=>'dropdown',  'escape' => false));?>
@@ -90,7 +83,8 @@ $cakeDescription = 'Movies Project';
                     </div>
                 </li>
             </ul>
-                <?php } else{ ?>
+
+                <?php }else{ ?>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><?= $this->Html->link('Connexion', '#loginModal', ["class"=>"nav-link", 'data-toggle'=>'modal'] ) ?></li>

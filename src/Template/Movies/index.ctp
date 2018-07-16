@@ -7,18 +7,21 @@
 
 <div class="col-12">
 
-    <?php if($this->request->session()->check('Auth.User')){
-        echo $this->Html->link(__('New movies'), ['action' => 'add']);
-    }else{
-        echo $this->Html->link('New movies', '#loginModal', ['data-toggle'=>'modal'] );
-    }
-    ?>
-
-
     <div class='col-12 center'>
         
-        <div class='title no-center'>
-            <h3 class=''>Liste des films</h2>
+        <div class='title'>
+            <h3 class='title-left'>Liste des films</h2>
+            <?php 
+                if($loggedIn){
+                    if($admin){
+                        echo $this->Html->link(__('Ajouter un film'), ['action' => 'add'], ['class' => 'btn btn-success button-right']); 
+                    }else{
+                        echo $this->Html->link(__('btn user'), '#', ['class' => 'btn btn-success button-right']); 
+                    }
+                }else{
+                    echo $this->Html->link('action avec connexion', '#loginModal', ['data-toggle'=>'modal', 'class' => 'btn btn-success button-right'] );
+                } 
+            ?>
         </div>
             
         <div class='container-movies center'>
@@ -27,9 +30,15 @@
                 foreach ($movies as $movie): ?>
                 
                 <div class='display-film'>
-                    <?php $name = $movie->name; ?>
+                    <?php $name = $movie->name;
+                    if($movie->image != "" AND $movie->image != "t"){
+                        $pictLink = "cover-movies/".$movie->image;
+                    }else{
+                        $pictLink = "cover.jpg";
+                    }
+                     ?>
                     <?=  $this->Html->link(
-                        $this->Html->image("cover.jpg", [
+                        $this->Html->image($pictLink, [
                             'alt' => 'Movie cover',
                             'class' => 'imgMovie'
                         ]).'<span class="spanMovie">'.$name.'</span>',

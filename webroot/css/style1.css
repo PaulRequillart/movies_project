@@ -140,7 +140,7 @@ a.aMovie{
 
 a:hover > .spanMovie{
     color:white !important;
-    text-transform: uppercase;
+    border-color: white !important;
 }
 
 a:hover{
@@ -152,8 +152,9 @@ h3{
 }
 
 .title {
+    margin-top: 15px;
     display: inline-block;
-    background-color: grey;
+    background-color: #475577;
     width: 80%;
     position: relative;
 
@@ -161,3 +162,19 @@ h3{
     border-top-right-radius: 10px;
 }
 
+.no-center{
+    text-align: left !important;
+}
+
+.title-left{
+    color : white !important;
+    float : left;
+    padding-top : 11px !important;
+    padding-left : 15px !important;
+}
+
+.button-right{
+    float : right;
+    margin-top : 11px !important;
+    margin-right : 15px !important;
+}
