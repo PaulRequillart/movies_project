@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+use Cake\Routing\Router;
 
 /**
  * Users Controller
@@ -16,7 +18,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'logout', 'password', 'reset']);
+        $this->Auth->allow(['add', 'logout', 'forgotPassword', 'reset']);
     }
 
     /**
@@ -175,5 +177,68 @@ class UsersController extends AppController
     {
         $this->Flash->success('Vous êtes maintenant déconnecté.');
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function forgotPassword(){
+        if($this->request->is('post')){
+            $query = $this->Users->findByEmail($this->request->data['email']);
+            $user = $query->first();
+            if(is_null($user)){
+                $this->Flash->error('Aucun utilisateur trouvé, veuiller vérifier l\'adresse mail');
+            }else{
+                $passkey = uniqid();
+                $url = Router::Url(['controller'=>'users', 'action'=>'reset-password'], true) . '/' . $passkey;
+                $timeout = time() + HOUR;
+                if($this->Users->updateAll(['passkey'=> $passkey, 'timeout'=> $timeout], ['id'=>$user->id])){
+                    $this->sendResetEmail($url, $user);
+                    $this->redirect(['controller'=>'Pages', 'action'=>'display']);
+                }else{
+                    $this->Flash->error('Erreur, temps dépassé.');
+                }
+            }
+        }
+    }
+
+    public function sendResetEmail($url, $user){
+        $email = new Email();
+        $email->template('resetpw');
+        $email->emailFormat('both');
+        $email->from('univinfo.sio@gmail.com');
+        $email->to($user->email, $user->username);
+        $email->subject('Project Movies - Reset your password');
+        $email->viewVars(['url' => $url, 'username' => $user->username]);
+        if($email->send()){
+            $this->Flash->success('Un email pour réinitialiser votre mot de passe a été envoyé');
+        }else{
+            $this->Flash->error('Erreur lors de l\'envoie de l\'email, veuillez réessayer :' . $email->smtpError);
+        }
+    }
+
+    public function reset($passkey = null){
+        if($passkey){
+            $query = $this->Users->find('all', ['conditions'=>['passkey'=>$passkey, 'timeout >' => time()]]);
+            $user = $query->first();
+            if($user){
+                if(!empty($this->request->data)){
+                    $this->request->data['passkey'] = null;
+                    $this->request->data['timeout'] = null;
+                    $user = $this->Users->patchEntity($user, $this->request->data);
+                    if($this->Users->save($user)){
+                        $this->Flash->success('Nouveau mot de passe enregistré');
+                        $this->redirect(['controller'=>'Pages', 'action'=>'display']);
+
+                    }else{
+                        $this->Flash->error('Impossible d\'enregistrer le nouveau mot de passe');
+                    }
+                }
+            }else{
+                $this->Flash->error('Url invalide ou expiré, vérifiez votre email ou réessayez ultérieurement.');
+                $this->redirect(['action'=>'forgotPassword']);
+            }
+            unset($user->password);
+            $this->set(compact('user'));
+        }else{
+            $this->redirect('/');
+        }
     }
 }

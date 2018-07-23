@@ -1,0 +1,45 @@
+Revoir :
+
+organisations balise css : content/container/etc.
+noms classe css
+
+noms helper : accueilHelper -> movieHelper avec toute les fonctions sur les films : 
+	- affiche films
+	- affiche random films
+	- affiche film pour une categorie
+	- affiche film pour un pays
+	- affiche film pour une recherche
+
+A faire : 
+- cr�er un compte gmail : project-movies@gmail.com
+- User : 
+	- interface compte utilisateur (en cours)
+	- insertion des fonctions changer mot de passe et changer email (done)
+	-- fonction demande aide
+	- fonction mot de passe oubli� avec token + mail (done)
+	- fonction envoie mail "mdp changé"
+	- table user += remember_me, + colonne mdp oublié (done)
+	-- cookie login
+	-- CGU dans l'inscription
+	-- captcha?
+	-- photo utilisateur
+
+- Movies : 
+	- ajout de film : ajouter l'upload d'image
+	- edit du film : modal avec la possibilité de le delete
+	- barre de recherche dynamique (si possible)
+	- pagination
+	- span nombre de likes
+	- span notes
+	-- filtre
+
+- interaction Users
+	- noter et commenter un film
+	- liker un film
+	- ajout d'un film � la liste "� voir"
+	- ajout d'un film � la liste "vu"
+	- pouvoir passer un film de "� voir" � "vu"
+	-- ajout des amiti�s
+	-- recommender un film � un ami
+	-- ajout de la messagerie
+

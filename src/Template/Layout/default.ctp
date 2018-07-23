@@ -28,8 +28,6 @@ $cakeDescription = 'Movies Project';
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
 
-    <?= $this->Html->script('login.js') ?>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 
@@ -41,11 +39,12 @@ $cakeDescription = 'Movies Project';
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     
-    
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-    <?= $this->Html->css('style1.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('home.css') ?>
+    <?= $this->Html->css('style1.css') ?>
+
+    <?= $this->Html->script('account.js') ?>
     
 
     <?= $this->fetch('meta') ?>
@@ -78,8 +77,8 @@ $cakeDescription = 'Movies Project';
                 <?= $this->Html->link($this->Html->image('user-logo.png', array('width' => '30', 'height' => '30')). ' ' .ucfirst($this->request->session()->read('Auth.User.username').'  '), '#', array('class'=>'nav-link dropdown-toggle', 'data-toggle'=>'dropdown',  'escape' => false));?>
                 
                     <div class="dropdown-menu">
-                        <?= $this->Html->link('Mon compte',['controller'=>'Users', 'action'=>'monProfil'], ["class"=>"dropdown-item"])?>
-                        <?= $this->Html->link('Deconnexion',['controller'=>'Users', 'action'=>'logout'], ["class"=>"dropdown-item"])?>
+                        <span class='span-dropdown-item'><?= $this->Html->link('Mon compte',['controller'=>'Users', 'action'=>'monProfil'], ["class"=>"dropdown-item a-param"])?></span>
+                        <span class='span-dropdown-item'><?= $this->Html->link('Deconnexion',['controller'=>'Users', 'action'=>'logout'], ["class"=>"dropdown-item a-logout"])?></span>
                     </div>
                 </li>
             </ul>
@@ -106,10 +105,10 @@ $cakeDescription = 'Movies Project';
                             <?= $this->Form->input('username', ['label' => 'Nom d\'utilisateur']) ?>
                             <?= $this->Form->input('password', ['label' => 'Mot de passe']) ?>
 
-                            <div class="ke-remember">
+                            <div class="checkbox-remember">
                                 <div class="input checkbox">
                                     <input type="hidden" name="remember_me" value="0">
-                                    <input type="checkbox" name="remember_me" value="0" id="remember_me" class="ke-checkbox" checked="checked">
+                                    <input type="checkbox" name="remember_me" value="0" id="remember_me" class="checkbox" checked="checked">
                                 </div>                            
                                 <label for="remember_me">
                                 <span class="ui"></span>Se souvenir de moi</label>
@@ -119,8 +118,10 @@ $cakeDescription = 'Movies Project';
                         
                         <?= $this->Form->button('Connexion', ['class' => 'btn btn-dark']) ?>
                         <?= $this->Form->end() ?>
-
+                        <?= $this->Html->link('Mot de passe oublié', ['controller'=>'Users', 'action'=>'forgotPassword'], ['class' => 'center']) ?>
+                        
                         <div class='center'>
+                            <hr>
                             <p>Pas encore membre ? N'hesitez plus !</p>
                             
                             <?= $this->Html->link('Inscription', ['controller'=>'Users', 'action'=>'add'], ["class"=>"btn btn-dark btna"] ) ?>

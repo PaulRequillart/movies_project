@@ -9,7 +9,7 @@
 
     <div class='col-12 center'>
         
-        <div class='title'>
+        <div class='title width-80'>
             <h3 class='title-left'>Liste des films</h2>
             <?php 
                 if($loggedIn){
